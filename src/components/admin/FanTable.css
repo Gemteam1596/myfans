@@ -1,0 +1,70 @@
+.fan-table{
+    margin-top:40px;
+    background:#1a1d2b;
+    padding:25px;
+    border-radius:20px;
+}
+
+.table-header{
+    margin-bottom:20px;
+}
+
+.table-header h2{
+    color:white;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:#24293d;
+}
+
+th{
+    color:#fff;
+    padding:16px;
+    text-align:left;
+}
+
+td{
+    color:#d1d5db;
+    padding:16px;
+    border-bottom:1px solid #2d3248;
+}
+
+.status{
+    padding:6px 14px;
+    border-radius:30px;
+    font-size:13px;
+}
+
+.active{
+    background:#1b5e20;
+    color:#4caf50;
+}
+
+.cancelled{
+    background:#5b1d1d;
+    color:#ff6b6b;
+}
+
+.edit-btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:8px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-right:10px;
+}
+
+.delete-btn{
+    background:#ff3d7f;
+    color:white;
+    border:none;
+    padding:8px 16px;
+    border-radius:8px;
+    cursor:pointer;
+}

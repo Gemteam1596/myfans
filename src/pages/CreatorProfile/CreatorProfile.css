@@ -1,0 +1,151 @@
+.creator-profile-page{
+    background:#09090d;
+    min-height:100vh;
+    color:#fff;
+}
+
+.cover-photo{
+    width:100%;
+    height:320px;
+    background:url("https://picsum.photos/1400/500") center/cover;
+}
+
+.profile-header{
+    margin-top:-90px;
+    display:flex;
+    gap:35px;
+    align-items:flex-end;
+    flex-wrap:wrap;
+}
+
+.profile-image{
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    object-fit:cover;
+    border:6px solid #09090d;
+}
+
+.profile-info{
+    flex:1;
+}
+
+.profile-info h2{
+    font-size:42px;
+    font-weight:700;
+}
+
+.username{
+    color:#bdbdbd;
+    margin-bottom:10px;
+}
+
+.bio{
+    max-width:650px;
+    color:#d4d4d4;
+}
+
+.verified{
+    color:#3ea6ff;
+    margin-left:10px;
+    font-size:26px;
+}
+
+.stats{
+    display:flex;
+    gap:60px;
+    margin:30px 0;
+}
+
+.stats h4{
+    margin:0;
+    font-size:28px;
+}
+
+.stats span{
+    color:#aaa;
+}
+
+.profile-buttons{
+    display:flex;
+    gap:15px;
+}
+
+.subscribe-btn{
+    background:#ff2d7a;
+    color:#fff;
+    border:none;
+    padding:14px 35px;
+    border-radius:40px;
+    font-weight:bold;
+}
+
+.message-btn{
+    background:transparent;
+    border:2px solid #fff;
+    color:#fff;
+    padding:14px 35px;
+    border-radius:40px;
+}
+
+.tabs{
+    margin-top:60px;
+    display:flex;
+    gap:20px;
+    border-bottom:1px solid #333;
+    padding-bottom:15px;
+}
+
+.tabs button{
+    background:none;
+    border:none;
+    color:#999;
+    font-size:18px;
+}
+
+.tabs .active{
+    color:#fff;
+    border-bottom:3px solid #ff2d7a;
+}
+
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin-top:40px;
+    padding-bottom:80px;
+}
+
+.gallery-item{
+    overflow:hidden;
+    border-radius:15px;
+}
+
+.gallery-item img{
+    width:100%;
+    height:320px;
+    object-fit:cover;
+    transition:.4s;
+}
+
+.gallery-item:hover img{
+    transform:scale(1.08);
+}
+
+@media(max-width:768px){
+
+.profile-header{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+}
+
+.stats{
+    justify-content:center;
+}
+
+.gallery{
+    grid-template-columns:repeat(2,1fr);
+}
+
+}

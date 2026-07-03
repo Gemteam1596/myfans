@@ -1,0 +1,392 @@
+/* ===========================
+   Public Creator Profile
+=========================== */
+
+.public-profile{
+    background:#0f172a;
+    min-height:100vh;
+    color:#fff;
+}
+
+.public-container{
+    width:95%;
+    max-width:1400px;
+    margin:40px auto;
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:30px;
+}
+
+.public-left{
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+}
+
+.public-right{
+    position:sticky;
+    top:30px;
+    height:fit-content;
+}
+
+/* ===========================
+   Hero
+=========================== */
+
+.creator-hero{
+    width:100%;
+}
+
+.creator-cover{
+    height:320px;
+    background-size:cover;
+    background-position:center;
+    border-radius:0 0 25px 25px;
+}
+
+.creator-hero-content{
+    width:95%;
+    max-width:1400px;
+    margin:-90px auto 0;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:30px;
+}
+
+.creator-avatar-large{
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    border:6px solid #0f172a;
+    object-fit:cover;
+}
+
+.creator-info{
+    flex:1;
+}
+
+.creator-info h1{
+    font-size:38px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.verified-icon{
+    color:#3b82f6;
+}
+
+.creator-category{
+    color:#94a3b8;
+    margin-top:8px;
+}
+
+.creator-numbers{
+    display:flex;
+    gap:45px;
+    margin-top:25px;
+}
+
+.creator-numbers div{
+    display:flex;
+    flex-direction:column;
+}
+
+.creator-numbers strong{
+    font-size:22px;
+}
+
+.creator-numbers span{
+    color:#94a3b8;
+    margin-top:5px;
+}
+
+.creator-actions{
+    display:flex;
+    gap:15px;
+}
+
+.subscribe-btn{
+    background:#7c5cff;
+    color:#fff;
+    border:none;
+    padding:14px 30px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.follow-btn,
+.like-btn{
+    background:#1e293b;
+    color:#fff;
+    border:none;
+    padding:14px 18px;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+/* ===========================
+   Cards
+=========================== */
+
+.public-card{
+    background:#1b2130;
+    padding:28px;
+    border-radius:18px;
+}
+
+.public-card h2{
+    margin-bottom:18px;
+}
+
+.creator-bio{
+    line-height:1.8;
+    color:#cbd5e1;
+}
+
+/* ===========================
+   Social
+=========================== */
+
+.social-links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:15px;
+    margin-top:25px;
+}
+
+.social-links a{
+    color:#fff;
+    background:#111827;
+    text-decoration:none;
+    padding:12px 18px;
+    border-radius:10px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+/* ===========================
+   Stats
+=========================== */
+
+.creator-stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.creator-stat-card{
+    background:#1b2130;
+    padding:22px;
+    border-radius:16px;
+    display:flex;
+    gap:18px;
+    align-items:center;
+}
+
+.creator-stat-icon{
+    width:60px;
+    height:60px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    color:#fff;
+}
+
+.creator-stat-card h4{
+    color:#94a3b8;
+    margin-bottom:8px;
+}
+
+/* ===========================
+   Subscribe Card
+=========================== */
+
+.subscribe-card{
+    background:#1b2130;
+    padding:30px;
+    border-radius:20px;
+}
+
+.subscribe-header{
+    text-align:center;
+}
+
+.subscribe-crown{
+    font-size:45px;
+    color:#facc15;
+}
+
+.subscribe-header h1{
+    margin:20px 0;
+    color:#7c5cff;
+}
+
+.subscribe-header p{
+    color:#94a3b8;
+}
+
+.subscribe-benefits{
+    margin:35px 0;
+}
+
+.benefit{
+    display:flex;
+    gap:15px;
+    margin-bottom:18px;
+    align-items:center;
+}
+
+.benefit svg{
+    color:#22c55e;
+}
+
+.subscribe-main-btn{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:12px;
+    background:#7c5cff;
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.locked-content,
+.gift-box{
+    margin-top:22px;
+    display:flex;
+    gap:12px;
+    color:#cbd5e1;
+    align-items:center;
+}
+
+/* ===========================
+   Gallery
+=========================== */
+
+.gallery-header{
+    margin-bottom:25px;
+}
+
+.gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.gallery-card{
+    position:relative;
+    overflow:hidden;
+    border-radius:18px;
+}
+
+.gallery-card img{
+    width:100%;
+    height:350px;
+    object-fit:cover;
+    display:block;
+}
+
+.video-badge{
+    position:absolute;
+    top:15px;
+    left:15px;
+    background:#00000090;
+    padding:10px;
+    border-radius:50%;
+}
+
+.premium-overlay{
+    position:absolute;
+    inset:0;
+    background:#000000b8;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+    font-size:22px;
+}
+
+.gallery-footer{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    padding:16px;
+    display:flex;
+    justify-content:space-between;
+    background:linear-gradient(transparent,#000);
+}
+
+.gallery-footer div{
+    display:flex;
+    gap:8px;
+    align-items:center;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media(max-width:1100px){
+
+.public-container{
+grid-template-columns:1fr;
+}
+
+.public-right{
+position:static;
+}
+
+.creator-stats{
+grid-template-columns:repeat(2,1fr);
+}
+
+.gallery-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.creator-hero-content{
+flex-direction:column;
+align-items:center;
+text-align:center;
+}
+
+.creator-actions{
+margin-top:20px;
+}
+
+}
+
+@media(max-width:700px){
+
+.gallery-grid{
+grid-template-columns:1fr;
+}
+
+.creator-stats{
+grid-template-columns:1fr;
+}
+
+.creator-numbers{
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.creator-avatar-large{
+width:140px;
+height:140px;
+}
+
+.creator-info h1{
+font-size:28px;
+}
+
+}
