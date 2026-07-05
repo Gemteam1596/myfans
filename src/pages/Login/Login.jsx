@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../../firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { auth } from "../../firebase";
 
 function Login() {
   const navigate = useNavigate();
@@ -15,28 +13,36 @@ function Login() {
     e.preventDefault();
 
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
+      // Firebase Login
+      await signInWithEmailAndPassword(auth, email, password);
+
+      // Load profile from MySQL
+      const response = await fetch(
+        "https://myfanshub.club/api/get-profile.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+          }),
+        }
       );
 
-      const user = userCredential.user;
+      const result = await response.json();
 
-      const docRef = doc(db, "users", user.uid);
-      const docSnap = await getDoc(docRef);
-
-      if (!docSnap.exists()) {
-        alert("User profile not found. Please create an account.");
-        navigate("/signup");
+      if (!result.success) {
+        alert(result.message);
         return;
       }
 
-      const userData = docSnap.data();
+      // Save user locally
+      localStorage.setItem("user", JSON.stringify(result.user));
 
       alert("Login successful!");
 
-      if (userData.accountType === "Creator") {
+      if (result.user.accountType === "Creator") {
         navigate("/creator-dashboard");
       } else {
         navigate("/fan-dashboard");
