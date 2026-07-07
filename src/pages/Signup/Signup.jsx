@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "../../firebase";
+import { auth } from "../../firebase";
 
 function Signup() {
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ function Signup() {
     }
 
     try {
-      // Create Authentication account
+      // Create Firebase Authentication account
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -32,19 +31,32 @@ function Signup() {
 
       const user = userCredential.user;
 
-      // Save user profile in Firestore
-      await setDoc(doc(db, "users", user.uid), {
-        uid: user.uid,
-        fullName,
-        username,
-        email,
-        accountType,
-        createdAt: new Date(),
+      // Save user profile in MySQL
+      const response = await fetch("https://myfanshub.club/api/signup.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firebaseUid: user.uid,
+          email,
+          username,
+          fullName,
+          accountType,
+        }),
       });
+
+      const result = await response.json();
+
+      if (!result.success) {
+        alert(result.message);
+        return;
+      }
 
       alert("Account created successfully!");
 
       navigate("/dashboard");
+
     } catch (error) {
       alert(error.message);
     }

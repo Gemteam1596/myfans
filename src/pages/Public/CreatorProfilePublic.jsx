@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../../firebase";
 
 import CreatorHero from "../../components/public/CreatorHero";
 import CreatorAbout from "../../components/public/CreatorAbout";
@@ -11,28 +14,39 @@ import "../../assets/css/PublicProfile.css";
 function CreatorProfilePublic() {
   const { username } = useParams();
 
-  // Dummy creator data (replace with Firebase later)
-  const creator = {
-    username,
-    name: "Emma Wilson",
-    verified: true,
-    category: "Fitness • Lifestyle • Travel",
-    avatar: "https://i.pravatar.cc/250?img=32",
-    cover:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1600",
-    followers: "15.4K",
-    subscribers: "1.2K",
-    posts: 284,
-    likes: "92K",
-    bio: `Hi 👋
+  const [creator, setCreator] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-I'm Emma.
+  useEffect(() => {
+    loadCreator();
+  }, [username]);
 
-I share exclusive fitness content, travel adventures and premium behind-the-scenes content every week.
+  const loadCreator = async () => {
+    try {
+      const q = query(
+        collection(db, "users"),
+        where("username", "==", username)
+      );
 
-Subscribe to unlock exclusive photos, videos and private updates.`,
-    subscriptionPrice: "$14.99/month",
+      const snapshot = await getDocs(q);
+
+      if (!snapshot.empty) {
+        setCreator(snapshot.docs[0].data());
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+    setLoading(false);
   };
+
+  if (loading) {
+    return <h2 style={{ textAlign: "center" }}>Loading...</h2>;
+  }
+
+  if (!creator) {
+    return <h2 style={{ textAlign: "center" }}>Creator not found</h2>;
+  }
 
   return (
     <div className="public-profile">

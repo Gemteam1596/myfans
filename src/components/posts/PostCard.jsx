@@ -1,31 +1,47 @@
 function PostCard({ post }) {
+
+  const mediaUrl =
+    "https://myfanshub.club/api/" + post.media;
+
   return (
     <div className="post-card">
 
-      <img
-        src={post.image}
-        alt={post.title}
-      />
+      {post.mediaType === "image" && (
+        <img
+          src={mediaUrl}
+          alt="Post"
+          className="img-fluid"
+        />
+      )}
+
+      {post.mediaType === "video" && (
+        <video
+          controls
+          width="100%"
+        >
+          <source
+            src={mediaUrl}
+          />
+        </video>
+      )}
 
       <div className="post-content">
 
-        <h5>{post.title}</h5>
+        <h5>{post.content}</h5>
 
-        <p>{post.caption}</p>
+        <p>
+          Visibility:
+          {" "}
+          {post.visibility}
+        </p>
 
-        <div className="post-stats">
+        <small>
+          {post.createdAt}
+        </small>
 
-          <span>❤️ {post.likes}</span>
+        <div className="post-actions mt-3">
 
-          <span>💬 {post.comments}</span>
-
-          <span>👁 {post.views}</span>
-
-        </div>
-
-        <div className="post-actions">
-
-          <button className="btn btn-primary">
+          <button className="btn btn-primary me-2">
             Edit
           </button>
 

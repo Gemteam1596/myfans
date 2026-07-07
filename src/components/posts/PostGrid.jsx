@@ -1,48 +1,65 @@
+import { useEffect, useState } from "react";
 import PostCard from "./PostCard";
 
-const posts = [
-  {
-    id: 1,
-    title: "Morning Workout",
-    caption: "Starting the day 💪",
-    image: "https://picsum.photos/500?1",
-    likes: "2.3K",
-    comments: 123,
-    views: "15K",
-  },
-  {
-    id: 2,
-    title: "Beach Shoot",
-    caption: "Summer vibes ☀️",
-    image: "https://picsum.photos/500?2",
-    likes: "5.8K",
-    comments: 521,
-    views: "42K",
-  },
-  {
-    id: 3,
-    title: "Behind The Scenes",
-    caption: "Exclusive content 🔥",
-    image: "https://picsum.photos/500?3",
-    likes: "3.9K",
-    comments: 298,
-    views: "24K",
-  },
-];
-
 function PostGrid() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadPosts();
+  }, []);
+
+  const loadPosts = async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user) {
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "https://myfanshub.club/api/get-posts.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            uid: user.uid,
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        setPosts(result.posts);
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+
+    setLoading(false);
+  };
+
+  if (loading) {
+    return <h4>Loading posts...</h4>;
+  }
+
+  if (posts.length === 0) {
+    return <h4>No posts yet.</h4>;
+  }
+
   return (
     <div className="posts-grid">
-
       {posts.map((post) => (
-
         <PostCard
           key={post.id}
           post={post}
         />
-
       ))}
-
     </div>
   );
 }
