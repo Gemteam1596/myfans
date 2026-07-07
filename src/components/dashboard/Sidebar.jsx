@@ -16,25 +16,22 @@ import {
 
 import "./Dashboard.css";
 
-function Sidebar() {
+function Sidebar({ isOpen = false, closeSidebar = () => {} }) {
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isOpen ? "open" : ""}`}>
 
       <div>
-
-        {/* Logo */}
 
         <div className="logo">
           ⚡ MYFANS
         </div>
-
-        {/* Navigation */}
 
         <ul className="sidebar-menu">
 
           <li>
             <NavLink
               to="/creator-dashboard"
+              onClick={closeSidebar}
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               <FaHome />
@@ -45,6 +42,7 @@ function Sidebar() {
           <li>
             <NavLink
               to="/creator-profile"
+              onClick={closeSidebar}
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               <FaUser />
@@ -55,6 +53,7 @@ function Sidebar() {
           <li>
             <NavLink
               to="/create-post"
+              onClick={closeSidebar}
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               <FaPlusCircle />
@@ -65,6 +64,7 @@ function Sidebar() {
           <li>
             <NavLink
               to="/my-posts"
+              onClick={closeSidebar}
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               <FaImages />
@@ -75,6 +75,7 @@ function Sidebar() {
           <li>
             <NavLink
               to="/subscribers"
+              onClick={closeSidebar}
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               <FaUsers />
@@ -85,6 +86,7 @@ function Sidebar() {
           <li>
             <NavLink
               to="/messages"
+              onClick={closeSidebar}
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               <FaEnvelope />
@@ -95,6 +97,7 @@ function Sidebar() {
           <li>
             <NavLink
               to="/analytics"
+              onClick={closeSidebar}
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               <FaChartLine />
@@ -105,6 +108,7 @@ function Sidebar() {
           <li>
             <NavLink
               to="/earnings"
+              onClick={closeSidebar}
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               <FaDollarSign />
@@ -115,6 +119,7 @@ function Sidebar() {
           <li>
             <NavLink
               to="/settings"
+              onClick={closeSidebar}
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               <FaCog />
@@ -125,8 +130,6 @@ function Sidebar() {
         </ul>
 
       </div>
-
-      {/* Bottom Section */}
 
       <div>
 

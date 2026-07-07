@@ -6,8 +6,9 @@ import {
   FaChevronDown,
 } from "react-icons/fa";
 
-function Topbar() {
-  const [open, setOpen] = useState(false);
+function Topbar({ toggleSidebar = () => {} }) {
+
+  const [profileOpen, setProfileOpen] = useState(false);
 
   return (
     <header className="topbar">
@@ -16,7 +17,7 @@ function Topbar() {
 
         <button
           className="menu-btn"
-          onClick={() => setOpen(!open)}
+          onClick={toggleSidebar}
         >
           <FaBars />
         </button>
@@ -50,7 +51,10 @@ function Topbar() {
 
         </div>
 
-        <div className="profile-area">
+        <div
+          className="profile-area"
+          onClick={() => setProfileOpen(!profileOpen)}
+        >
 
           <img
             src="https://i.pravatar.cc/100?img=12"
@@ -67,7 +71,7 @@ function Topbar() {
 
           <FaChevronDown />
 
-          {open && (
+          {profileOpen && (
 
             <div className="profile-dropdown">
 
