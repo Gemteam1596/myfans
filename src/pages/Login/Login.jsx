@@ -33,22 +33,22 @@ function Login() {
       const result = await response.json();
 
       if (!result.success) {
-        alert(result.message);
+        console.error(result.message);
         return;
       }
 
       // Save user locally
       localStorage.setItem("user", JSON.stringify(result.user));
 
-      alert("Login successful!");
-
+      // Redirect directly (no popup)
       if (result.user.accountType === "Creator") {
         navigate("/creator-dashboard");
       } else {
         navigate("/fan-dashboard");
       }
+
     } catch (error) {
-      alert(error.message);
+      console.error(error);
     }
   };
 
@@ -58,11 +58,13 @@ function Login() {
         <div className="row justify-content-center">
           <div className="col-lg-5 col-md-7">
             <div className="login-card">
+
               <h2>Welcome Back</h2>
 
               <p>Login to your MyFans account</p>
 
               <form onSubmit={handleLogin}>
+
                 <div className="mb-3">
                   <label>Email Address</label>
 
@@ -90,6 +92,7 @@ function Login() {
                 </div>
 
                 <div className="d-flex justify-content-between mb-4">
+
                   <div>
                     <input type="checkbox" /> Remember Me
                   </div>
@@ -97,19 +100,28 @@ function Login() {
                   <Link to="/forgot-password">
                     Forgot Password?
                   </Link>
+
                 </div>
 
-                <button type="submit" className="btn btn-danger w-100">
+                <button
+                  type="submit"
+                  className="btn btn-danger w-100"
+                >
                   Login
                 </button>
 
                 <div className="text-center mt-4">
                   Don't have an account?{" "}
-                  <Link to="/signup" className="ms-2 signup-link">
+                  <Link
+                    to="/signup"
+                    className="ms-2 signup-link"
+                  >
                     Sign Up
                   </Link>
                 </div>
+
               </form>
+
             </div>
           </div>
         </div>
