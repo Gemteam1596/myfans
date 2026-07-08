@@ -40,11 +40,11 @@ function Login() {
       // Save user locally
       localStorage.setItem("user", JSON.stringify(result.user));
 
-      // Redirect directly (no popup)
+      // Redirect and remove Login page from history
       if (result.user.accountType === "Creator") {
-        navigate("/creator-dashboard");
+        navigate("/creator-dashboard", { replace: true });
       } else {
-        navigate("/fan-dashboard");
+        navigate("/fan-dashboard", { replace: true });
       }
 
     } catch (error) {
@@ -92,7 +92,6 @@ function Login() {
                 </div>
 
                 <div className="d-flex justify-content-between mb-4">
-
                   <div>
                     <input type="checkbox" /> Remember Me
                   </div>
@@ -100,7 +99,6 @@ function Login() {
                   <Link to="/forgot-password">
                     Forgot Password?
                   </Link>
-
                 </div>
 
                 <button

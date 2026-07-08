@@ -5,7 +5,15 @@ import {
   FaCrown,
 } from "react-icons/fa";
 
+import { useNavigate } from "react-router-dom";
+
 function SubscribeCard({ creator }) {
+  const navigate = useNavigate();
+
+  const handleSubscribe = () => {
+    navigate(`/subscribe/${creator.username}`);
+  };
+
   return (
     <div className="subscribe-card">
 
@@ -15,7 +23,7 @@ function SubscribeCard({ creator }) {
 
         <h2>Become a Subscriber</h2>
 
-        <h1>{creator.subscriptionPrice}</h1>
+        <h1>{creator.subscriptionPrice} USDT</h1>
 
         <p>Billed monthly • Cancel anytime</p>
 
@@ -45,7 +53,10 @@ function SubscribeCard({ creator }) {
 
       </div>
 
-      <button className="subscribe-main-btn">
+      <button
+        className="subscribe-main-btn"
+        onClick={handleSubscribe}
+      >
         Subscribe Now
       </button>
 

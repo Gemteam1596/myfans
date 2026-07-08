@@ -50,29 +50,22 @@ function CreatorProfilePublic() {
 
   return (
     <div className="public-profile">
-
       <CreatorHero creator={creator} />
 
       <div className="public-container">
-
         <div className="public-left">
-
           <CreatorAbout creator={creator} />
 
           <CreatorStats creator={creator} />
 
-          <CreatorGallery />
-
+          {/* Pass creator to gallery */}
+          <CreatorGallery creator={creator} />
         </div>
 
         <div className="public-right">
-
           <SubscribeCard creator={creator} />
-
         </div>
-
       </div>
-
     </div>
   );
 }

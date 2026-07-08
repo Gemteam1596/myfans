@@ -4,14 +4,14 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
-
+import Subscribe from "./pages/Subscribe/Subscribe";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import FanDashboard from "./pages/FanDashboard/FanDashboard";
 import CreatorDashboard from "./pages/CreatorDashboard/CreatorDashboard";
 import CreatorProfile from "./pages/CreatorProfile/CreatorProfile";
 import CreatePost from "./pages/CreatePost/CreatePost";
 import MyPosts from "./pages/MyPosts/MyPosts";
-
+import PaymentRequests from "./pages/Admin/PaymentRequests";
 // NEW
 import CreatorProfilePublic from "./pages/Public/CreatorProfilePublic";
 
@@ -59,6 +59,7 @@ function App() {
           </ProtectedRoute>
         }
       />
+      
 
       <Route
         path="/fan-dashboard"
@@ -104,6 +105,14 @@ function App() {
           </ProtectedRoute>
         }
       />
+      <Route
+    path="/subscribe/:username"
+    element={<Subscribe />}
+/>
+      <Route
+    path="/admin-payments"
+    element={<PaymentRequests />}
+/>
 
       {/* ===========================
           Admin Routes

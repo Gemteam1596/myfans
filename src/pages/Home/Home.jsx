@@ -1,7 +1,23 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/layout/Navbar";
 import heroImage from "../../assets/images/hero.png";
 
 function Home() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (user) {
+      if (user.accountType === "Creator") {
+        navigate("/creator-dashboard", { replace: true });
+      } else {
+        navigate("/fan-dashboard", { replace: true });
+      }
+    }
+  }, [navigate]);
+
   return (
     <>
       <Navbar />
@@ -10,7 +26,6 @@ function Home() {
         <div className="container">
           <div className="row align-items-center">
 
-            {/* Left Content */}
             <div className="col-lg-6 text-center text-lg-start">
 
               <span className="badge bg-danger px-3 py-2 mb-3">
@@ -30,11 +45,17 @@ function Home() {
 
               <div className="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
 
-                <button className="btn btn-danger btn-lg">
+                <button
+                  className="btn btn-danger btn-lg"
+                  onClick={() => navigate("/signup")}
+                >
                   Join Now
                 </button>
 
-                <button className="btn btn-outline-light btn-lg">
+                <button
+                  className="btn btn-outline-light btn-lg"
+                  onClick={() => navigate("/creator/james")}
+                >
                   Explore
                 </button>
 
@@ -42,7 +63,6 @@ function Home() {
 
             </div>
 
-            {/* Right Image */}
             <div className="col-lg-6 text-center mt-5 mt-lg-0">
 
               <img

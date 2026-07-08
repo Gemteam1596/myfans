@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   FaHeart,
   FaComment,
@@ -5,58 +6,59 @@ import {
   FaPlay,
 } from "react-icons/fa";
 
-const posts = [
-  {
-    id: 1,
-    image: "https://picsum.photos/600/700?random=11",
-    likes: "14.2K",
-    comments: "632",
-    premium: false,
-    type: "photo",
-  },
-  {
-    id: 2,
-    image: "https://picsum.photos/600/700?random=12",
-    likes: "10.8K",
-    comments: "481",
-    premium: true,
-    type: "photo",
-  },
-  {
-    id: 3,
-    image: "https://picsum.photos/600/700?random=13",
-    likes: "18.5K",
-    comments: "925",
-    premium: false,
-    type: "video",
-  },
-  {
-    id: 4,
-    image: "https://picsum.photos/600/700?random=14",
-    likes: "9.4K",
-    comments: "312",
-    premium: true,
-    type: "photo",
-  },
-  {
-    id: 5,
-    image: "https://picsum.photos/600/700?random=15",
-    likes: "23.7K",
-    comments: "1.4K",
-    premium: false,
-    type: "video",
-  },
-  {
-    id: 6,
-    image: "https://picsum.photos/600/700?random=16",
-    likes: "15.6K",
-    comments: "782",
-    premium: true,
-    type: "photo",
-  },
-];
+function CreatorGallery({ creator }) {
 
-function CreatorGallery() {
+  const [posts, setPosts] = useState([]);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+
+    if (!creator) return;
+
+    loadPosts();
+
+  }, [creator]);
+
+  const loadPosts = async () => {
+
+    try {
+
+      const response = await fetch(
+        "https://myfanshub.club/api/get-posts.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            uid: creator.uid,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        setPosts(data.posts);
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+
+    setLoading(false);
+
+  };
+
+  if (loading) {
+    return (
+      <div className="public-card">
+        <h3>Loading posts...</h3>
+      </div>
+    );
+  }
+
   return (
     <div className="public-card">
 
@@ -64,63 +66,83 @@ function CreatorGallery() {
 
         <h2>Latest Content</h2>
 
-        <p>Browse public and premium posts.</p>
+        <p>Browse free and premium posts.</p>
 
       </div>
 
       <div className="gallery-grid">
 
-        {posts.map((post) => (
+        {posts.length === 0 && (
+          <h4>No posts available.</h4>
+        )}
 
-          <div
-            key={post.id}
-            className="gallery-card"
-          >
+        {posts.map((post) => {
 
-            <img
-              src={post.image}
-              alt="Creator Post"
-            />
+          const mediaUrl =
+            "https://myfanshub.club/api/" + post.media;
 
-            {post.type === "video" && (
-              <div className="video-badge">
-                <FaPlay />
-              </div>
-            )}
+          return (
 
-            {post.premium && (
-              <div className="premium-overlay">
+            <div
+              key={post.id}
+              className="gallery-card"
+            >
 
-                <FaLock />
+              {post.mediaType === "image" && (
+                <img
+                  src={mediaUrl}
+                  alt="Creator Post"
+                />
+              )}
 
-                <span>Premium Content</span>
+              {post.mediaType === "video" && (
+                <>
+                  <video
+                    src={mediaUrl}
+                    muted
+                  />
 
-              </div>
-            )}
+                  <div className="video-badge">
+                    <FaPlay />
+                  </div>
+                </>
+              )}
 
-            <div className="gallery-footer">
+              {post.visibility === "premium" && (
+                <div className="premium-overlay">
 
-              <div>
+                  <FaLock />
 
-                <FaHeart />
+                  <span>Premium Content</span>
 
-                {post.likes}
+                </div>
+              )}
 
-              </div>
+              <div className="gallery-footer">
 
-              <div>
+                <div>
 
-                <FaComment />
+                  <FaHeart />
 
-                {post.comments}
+                  0
+
+                </div>
+
+                <div>
+
+                  <FaComment />
+
+                  0
+
+                </div>
 
               </div>
 
             </div>
 
-          </div>
+          );
 
-        ))}
+        })}
 
       </div>
 
