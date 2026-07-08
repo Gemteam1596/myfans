@@ -1,8 +1,10 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Sidebar from "../../components/dashboard/Sidebar";
 import Topbar from "../../components/dashboard/Topbar";
 import StatCard from "../../components/dashboard/StatCard";
 import EarningsChart from "../../components/dashboard/EarningsChart";
-
 import RecentActivity from "../../components/dashboard/RecentActivity";
 import NotificationsPanel from "../../components/dashboard/NotificationsPanel";
 import GoalTracker from "../../components/dashboard/GoalTracker";
@@ -11,18 +13,41 @@ import WeeklyPerformance from "../../components/dashboard/WeeklyPerformance";
 import "../../components/dashboard/Dashboard.css";
 
 function CreatorDashboard() {
+
+  const navigate = useNavigate();
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    console.log("TOGGLE SIDEBAR");
+    setSidebarOpen(prev => !prev);
+  };
+
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+  };
+
   return (
     <div className="dashboard">
 
-      {/* Sidebar */}
-      <Sidebar />
+      <Sidebar
+        isOpen={sidebarOpen}
+        closeSidebar={closeSidebar}
+      />
 
-      {/* Main Content */}
+      {sidebarOpen && (
+        <div
+          className="sidebar-overlay"
+          onClick={closeSidebar}
+        />
+      )}
+
       <main className="dashboard-content">
 
-        <Topbar />
+        <Topbar
+          toggleSidebar={toggleSidebar}
+        />
 
-        {/* Header */}
         <div className="dashboard-header">
 
           <div>
@@ -35,16 +60,17 @@ function CreatorDashboard() {
 
           </div>
 
-          <button className="btn btn-danger dashboard-create-btn">
+          <button
+            className="btn btn-danger dashboard-create-btn"
+            onClick={() => navigate("/create-post")}
+          >
             + Create New Post
           </button>
 
         </div>
 
-        {/* Statistics */}
         <StatCard />
 
-        {/* Earnings + Subscription Summary */}
         <div className="row mt-4">
 
           <div className="col-lg-8 mb-4">
@@ -85,8 +111,6 @@ function CreatorDashboard() {
 
         </div>
 
-        {/* Activity + Notifications */}
-
         <div className="row">
 
           <div className="col-lg-6 mb-4">
@@ -98,8 +122,6 @@ function CreatorDashboard() {
           </div>
 
         </div>
-
-        {/* Goal Tracker + Weekly Performance */}
 
         <div className="row">
 

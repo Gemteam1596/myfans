@@ -18,25 +18,34 @@ function CreatorDashboard() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const toggleSidebar = () => {
+    console.log("TOGGLE SIDEBAR");
+    setSidebarOpen(prev => !prev);
+  };
+
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+  };
+
   return (
     <div className="dashboard">
 
       <Sidebar
         isOpen={sidebarOpen}
-        closeSidebar={() => setSidebarOpen(false)}
+        closeSidebar={closeSidebar}
       />
 
       {sidebarOpen && (
         <div
           className="sidebar-overlay"
-          onClick={() => setSidebarOpen(false)}
+          onClick={closeSidebar}
         />
       )}
 
       <main className="dashboard-content">
 
         <Topbar
-          toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+          toggleSidebar={toggleSidebar}
         />
 
         <div className="dashboard-header">

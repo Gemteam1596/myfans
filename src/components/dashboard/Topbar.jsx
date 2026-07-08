@@ -17,7 +17,10 @@ function Topbar({ toggleSidebar = () => {} }) {
 
         <button
           className="menu-btn"
-          onClick={toggleSidebar}
+          onClick={() => {
+            console.log("MENU CLICKED");
+            toggleSidebar();
+          }}
         >
           <FaBars />
         </button>
