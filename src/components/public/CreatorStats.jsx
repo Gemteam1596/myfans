@@ -9,25 +9,25 @@ function CreatorStats({ creator }) {
   const stats = [
     {
       title: "Followers",
-      value: creator.followers,
+      value: creator.followers || 0,
       icon: <FaUsers />,
       color: "#7c5cff",
     },
     {
       title: "Subscribers",
-      value: creator.subscribers,
+      value: creator.subscribers || 0,
       icon: <FaDollarSign />,
       color: "#22c55e",
     },
     {
       title: "Posts",
-      value: creator.posts,
+      value: creator.posts || 0,
       icon: <FaImage />,
       color: "#3b82f6",
     },
     {
       title: "Likes",
-      value: creator.likes,
+      value: creator.likes || 0,
       icon: <FaHeart />,
       color: "#ef4444",
     },
@@ -37,8 +37,10 @@ function CreatorStats({ creator }) {
     <div className="creator-stats">
 
       {stats.map((item) => (
-
-        <div className="creator-stat-card" key={item.title}>
+        <div
+          className="creator-stat-card"
+          key={item.title}
+        >
 
           <div
             className="creator-stat-icon"
@@ -56,7 +58,6 @@ function CreatorStats({ creator }) {
           </div>
 
         </div>
-
       ))}
 
     </div>

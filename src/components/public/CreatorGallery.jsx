@@ -7,23 +7,20 @@ import {
 } from "react-icons/fa";
 
 function CreatorGallery({ creator }) {
-
   const [posts, setPosts] = useState([]);
-  const [isSubscribed, setIsSubscribed] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
-    if (!creator) return;
+    if (!creator?.uid) {
+      setLoading(false);
+      return;
+    }
 
     loadPosts();
-
   }, [creator]);
 
   const loadPosts = async () => {
-
     try {
-
       const response = await fetch(
         "https://myfanshub.club/api/get-posts.php",
         {
@@ -37,18 +34,21 @@ function CreatorGallery({ creator }) {
         }
       );
 
-      const data = await response.json();
+      const result = await response.json();
 
-      if (data.success) {
-        setPosts(data.posts);
+      console.log("Posts API:", result);
+
+      if (result.success) {
+        setPosts(result.posts || []);
+      } else {
+        console.error(result.message);
       }
 
     } catch (error) {
-      console.error(error);
+      console.error("Load Posts Error:", error);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
-
   };
 
   if (loading) {
@@ -63,11 +63,8 @@ function CreatorGallery({ creator }) {
     <div className="public-card">
 
       <div className="gallery-header">
-
         <h2>Latest Content</h2>
-
         <p>Browse free and premium posts.</p>
-
       </div>
 
       <div className="gallery-grid">
@@ -79,7 +76,13 @@ function CreatorGallery({ creator }) {
         {posts.map((post) => {
 
           const mediaUrl =
-            "https://myfanshub.club/api/" + post.media;
+            post.media
+              ? `https://myfanshub.club/api/${post.media}`
+              : "";
+
+          const isPremium =
+            post.visibility === "premium" ||
+            post.visibility === "subscribers";
 
           return (
 
@@ -88,18 +91,19 @@ function CreatorGallery({ creator }) {
               className="gallery-card"
             >
 
-              {post.mediaType === "image" && (
+              {post.mediaType === "image" && mediaUrl && (
                 <img
                   src={mediaUrl}
                   alt="Creator Post"
                 />
               )}
 
-              {post.mediaType === "video" && (
+              {post.mediaType === "video" && mediaUrl && (
                 <>
                   <video
                     src={mediaUrl}
                     muted
+                    controls={false}
                   />
 
                   <div className="video-badge">
@@ -108,32 +112,23 @@ function CreatorGallery({ creator }) {
                 </>
               )}
 
-              {post.visibility === "premium" && (
+              {isPremium && (
                 <div className="premium-overlay">
-
                   <FaLock />
-
                   <span>Premium Content</span>
-
                 </div>
               )}
 
               <div className="gallery-footer">
 
                 <div>
-
                   <FaHeart />
-
-                  0
-
+                  <span>{post.likes || 0}</span>
                 </div>
 
                 <div>
-
                   <FaComment />
-
-                  0
-
+                  <span>{post.comments || 0}</span>
                 </div>
 
               </div>
@@ -141,7 +136,6 @@ function CreatorGallery({ creator }) {
             </div>
 
           );
-
         })}
 
       </div>

@@ -11,6 +11,11 @@ function SubscribeCard({ creator }) {
   const navigate = useNavigate();
 
   const handleSubscribe = () => {
+    if (!creator?.username) {
+      alert("Creator profile is not available.");
+      return;
+    }
+
     navigate(`/subscribe/${creator.username}`);
   };
 
@@ -23,7 +28,9 @@ function SubscribeCard({ creator }) {
 
         <h2>Become a Subscriber</h2>
 
-        <h1>{creator.subscriptionPrice} USDT</h1>
+        <h1>
+          {creator?.subscriptionPrice || "0"} USDT
+        </h1>
 
         <p>Billed monthly • Cancel anytime</p>
 

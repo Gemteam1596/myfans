@@ -1,15 +1,54 @@
-function PostCard({ post }) {
+import { useState } from "react";
 
+function PostCard({ post }) {
   const mediaUrl = "https://myfanshub.club/api/" + post.media;
 
-  const deletePost = async () => {
+  const [editing, setEditing] = useState(false);
+  const [content, setContent] = useState(post.content);
+  const [visibility, setVisibility] = useState(post.visibility);
+  const [saving, setSaving] = useState(false);
 
-    const confirmDelete = window.confirm("Are you sure you want to delete this post?");
-
-    if (!confirmDelete) return;
+  const savePost = async () => {
+    setSaving(true);
 
     try {
+      const response = await fetch(
+        "https://myfanshub.club/api/update-post.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: post.id,
+            content,
+            visibility,
+          }),
+        }
+      );
 
+      const result = await response.json();
+
+      if (result.success) {
+        alert("✅ Post updated successfully!");
+        window.location.reload();
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Failed to update post.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const deletePost = async () => {
+    if (!window.confirm("Are you sure you want to delete this post?")) {
+      return;
+    }
+
+    try {
       const response = await fetch(
         "https://myfanshub.club/api/delete-post.php",
         {
@@ -31,12 +70,10 @@ function PostCard({ post }) {
       } else {
         alert(result.message);
       }
-
     } catch (error) {
       console.error(error);
       alert("Failed to delete post.");
     }
-
   };
 
   return (
@@ -58,30 +95,70 @@ function PostCard({ post }) {
 
       <div className="post-content">
 
-        <h5>{post.content}</h5>
+        {editing ? (
+          <>
+            <textarea
+              className="form-control mb-3"
+              rows="4"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
 
-        <p>
-          <strong>Visibility:</strong> {post.visibility}
-        </p>
+            <select
+              className="form-select mb-3"
+              value={visibility}
+              onChange={(e) => setVisibility(e.target.value)}
+            >
+              <option value="free">Free</option>
+              <option value="subscribers">
+                Subscribers Only
+              </option>
+            </select>
 
-        <small>{post.createdAt}</small>
+            <button
+              className="btn btn-success me-2"
+              onClick={savePost}
+              disabled={saving}
+            >
+              {saving ? "Saving..." : "Save"}
+            </button>
 
-        <div className="post-actions mt-3">
+            <button
+              className="btn btn-secondary"
+              onClick={() => setEditing(false)}
+            >
+              Cancel
+            </button>
+          </>
+        ) : (
+          <>
+            <h5>{post.content}</h5>
 
-          <button
-            className="btn btn-primary me-2"
-          >
-            Edit
-          </button>
+            <p>
+              <strong>Visibility:</strong> {post.visibility}
+            </p>
 
-          <button
-            className="btn btn-danger"
-            onClick={deletePost}
-          >
-            Delete
-          </button>
+            <small>{post.createdAt}</small>
 
-        </div>
+            <div className="post-actions mt-3">
+
+              <button
+                className="btn btn-primary me-2"
+                onClick={() => setEditing(true)}
+              >
+                Edit
+              </button>
+
+              <button
+                className="btn btn-danger"
+                onClick={deletePost}
+              >
+                Delete
+              </button>
+
+            </div>
+          </>
+        )}
 
       </div>
 

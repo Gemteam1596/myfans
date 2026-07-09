@@ -12,30 +12,65 @@ function CreatorAbout({ creator }) {
       <h2>About Me</h2>
 
       <p className="creator-bio">
-        {creator.bio}
+        {creator.bio && creator.bio.trim() !== ""
+          ? creator.bio
+          : "This creator hasn't added a bio yet."}
       </p>
 
       <div className="social-links">
 
-        <a href="#">
-          <FaInstagram />
-          Instagram
-        </a>
+        {creator.instagram && (
+          <a
+            href={creator.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaInstagram />
+            Instagram
+          </a>
+        )}
 
-        <a href="#">
-          <FaTwitter />
-          Twitter
-        </a>
+        {creator.twitter && (
+          <a
+            href={creator.twitter}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaTwitter />
+            Twitter
+          </a>
+        )}
 
-        <a href="#">
-          <FaYoutube />
-          YouTube
-        </a>
+        {creator.youtube && (
+          <a
+            href={creator.youtube}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaYoutube />
+            YouTube
+          </a>
+        )}
 
-        <a href="#">
-          <FaGlobe />
-          Website
-        </a>
+        {creator.website && (
+          <a
+            href={creator.website}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaGlobe />
+            Website
+          </a>
+        )}
+
+        {!creator.instagram &&
+          !creator.twitter &&
+          !creator.youtube &&
+          !creator.website && (
+            <p className="text-muted">
+              No social links available.
+            </p>
+          )}
 
       </div>
 
