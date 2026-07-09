@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../../firebase";
 
 import CreatorHero from "../../components/public/CreatorHero";
 import CreatorAbout from "../../components/public/CreatorAbout";
@@ -18,34 +16,90 @@ function CreatorProfilePublic() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadCreator();
+    if (username) {
+      loadCreator();
+    }
   }, [username]);
 
   const loadCreator = async () => {
     try {
-      const q = query(
-        collection(db, "users"),
-        where("username", "==", username)
+      console.log("========== PUBLIC PROFILE ==========");
+      console.log("Username:", username);
+
+      const response = await fetch(
+        "https://myfanshub.club/api/get-profile.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username.trim(),
+          }),
+        }
       );
 
-      const snapshot = await getDocs(q);
+      console.log("HTTP Status:", response.status);
 
-      if (!snapshot.empty) {
-        setCreator(snapshot.docs[0].data());
+      if (!response.ok) {
+        throw new Error(`HTTP Error ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      console.log("API Response:", result);
+
+      if (result.success && result.user) {
+        console.log("Creator Loaded Successfully");
+        console.log(result.user);
+
+        setCreator(result.user);
+      } else {
+        console.error("API ERROR:", result);
+
+        alert(
+          "API ERROR\n\n" +
+          JSON.stringify(result, null, 2)
+        );
+
+        setCreator(null);
       }
     } catch (error) {
-      console.error(error);
-    }
+      console.error("Fetch Error:", error);
 
-    setLoading(false);
+      alert(error.message);
+
+      setCreator(null);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (loading) {
-    return <h2 style={{ textAlign: "center" }}>Loading...</h2>;
+    return (
+      <h2 style={{ textAlign: "center", marginTop: "50px" }}>
+        Loading Creator...
+      </h2>
+    );
   }
 
   if (!creator) {
-    return <h2 style={{ textAlign: "center" }}>Creator not found</h2>;
+    return (
+      <div
+        style={{
+          color: "#fff",
+          textAlign: "center",
+          padding: "60px",
+        }}
+      >
+        <h2>Creator not found</h2>
+
+        <p>
+          Open Developer Console (F12 → Console)
+          and send me the API response.
+        </p>
+      </div>
+    );
   }
 
   return (
@@ -55,10 +109,7 @@ function CreatorProfilePublic() {
       <div className="public-container">
         <div className="public-left">
           <CreatorAbout creator={creator} />
-
           <CreatorStats creator={creator} />
-
-          {/* Pass creator to gallery */}
           <CreatorGallery creator={creator} />
         </div>
 
