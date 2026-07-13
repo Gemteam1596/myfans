@@ -27,6 +27,31 @@ function CreatorDashboard() {
     setSidebarOpen(false);
   };
 
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  const profileUrl =
+    user?.username
+      ? `${window.location.origin}/creator/${user.username}`
+      : "";
+
+  const copyProfileUrl = async () => {
+
+    if (!profileUrl) return;
+
+    try {
+
+      await navigator.clipboard.writeText(profileUrl);
+
+      alert("Profile URL copied!");
+
+    } catch {
+
+      alert("Unable to copy profile URL.");
+
+    }
+
+  };
+
   return (
     <div className="dashboard">
 
@@ -58,6 +83,38 @@ function CreatorDashboard() {
               Manage your content, subscribers and earnings.
             </p>
 
+            <div
+              className="dashboard-box mt-4"
+              style={{
+                maxWidth: "700px",
+                padding: "20px",
+                borderRadius: "14px"
+              }}
+            >
+
+              <h5
+                style={{
+                  marginBottom: "15px"
+                }}
+              >
+                🌐 Share Your Creator Profile
+              </h5>
+
+              <input
+                className="form-control"
+                readOnly
+                value={profileUrl}
+              />
+
+              <button
+                className="btn btn-primary mt-3"
+                onClick={copyProfileUrl}
+              >
+                📋 Copy Profile URL
+              </button>
+
+            </div>
+
           </div>
 
           <button
@@ -68,8 +125,7 @@ function CreatorDashboard() {
           </button>
 
         </div>
-
-        <StatCard />
+                <StatCard />
 
         <div className="row mt-4">
 
