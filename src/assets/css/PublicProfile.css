@@ -390,3 +390,189 @@ font-size:28px;
 }
 
 }
+/* =========================================
+   MOBILE FIXES
+   Add this at the END of PublicProfile.css
+=========================================*/
+
+@media screen and (max-width:768px){
+
+.public-profile{
+    overflow-x:hidden;
+}
+
+.public-container{
+    width:100%;
+    padding:15px;
+    margin:20px auto;
+    grid-template-columns:1fr;
+    gap:20px;
+}
+
+.creator-cover{
+    height:180px;
+    border-radius:0;
+}
+
+.creator-hero-content{
+    width:100%;
+    margin-top:-70px;
+    padding:0 15px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:18px;
+}
+
+.creator-avatar-large{
+    width:120px;
+    height:120px;
+    border-width:4px;
+}
+
+.creator-info{
+    width:100%;
+}
+
+.creator-info h1{
+    justify-content:center;
+    font-size:30px;
+    flex-wrap:wrap;
+}
+
+.creator-category{
+    font-size:15px;
+}
+
+.creator-numbers{
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:25px;
+}
+
+.creator-numbers div{
+    align-items:center;
+}
+
+.creator-actions{
+    width:100%;
+    display:grid;
+    grid-template-columns:1fr 1fr 60px;
+    gap:10px;
+    margin-top:25px;
+}
+
+.subscribe-btn,
+.follow-btn,
+.like-btn{
+    width:100%;
+    padding:14px 10px;
+    font-size:15px;
+}
+
+.public-card{
+    padding:20px;
+}
+
+.creator-stats{
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.creator-stat-card{
+    padding:16px;
+}
+
+.creator-stat-icon{
+    width:50px;
+    height:50px;
+    font-size:20px;
+}
+
+.gallery-grid{
+    grid-template-columns:1fr;
+    gap:18px;
+}
+
+.gallery-card img{
+    height:420px;
+}
+
+.subscribe-card{
+    padding:22px;
+}
+
+.subscribe-header h1{
+    font-size:34px;
+}
+
+.subscribe-main-btn{
+    padding:16px;
+}
+
+.gallery-footer{
+    padding:14px;
+}
+
+}
+
+
+/* Small phones */
+
+@media screen and (max-width:480px){
+
+.creator-cover{
+    height:150px;
+}
+
+.creator-avatar-large{
+    width:100px;
+    height:100px;
+}
+
+.creator-info h1{
+    font-size:26px;
+}
+
+.creator-category{
+    font-size:14px;
+}
+
+.creator-numbers{
+    grid-template-columns:repeat(3,1fr);
+}
+
+.creator-numbers strong{
+    font-size:20px;
+}
+
+.creator-numbers span{
+    font-size:13px;
+}
+
+.creator-actions{
+    grid-template-columns:1fr;
+}
+
+.subscribe-btn,
+.follow-btn,
+.like-btn{
+    width:100%;
+}
+
+.creator-stats{
+    grid-template-columns:1fr;
+}
+
+.gallery-card img{
+    height:360px;
+}
+
+.subscribe-header h1{
+    font-size:30px;
+}
+
+}
