@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Sidebar from "../../components/dashboard/Sidebar";
@@ -15,7 +15,8 @@ import "../../components/dashboard/Dashboard.css";
 function CreatorDashboard() {
 
   const navigate = useNavigate();
-
+const [profileUrl, setProfileUrl] = useState("");
+const [copied, setCopied] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -26,7 +27,29 @@ function CreatorDashboard() {
   const closeSidebar = () => {
     setSidebarOpen(false);
   };
+const closeSidebar = () => {
+  setSidebarOpen(false);
+};
+useEffect(() => {
+  const user = JSON.parse(localStorage.getItem("user"));
 
+  if (user?.username) {
+    setProfileUrl(
+      `${window.location.origin}/creator/${user.username}`
+    );
+  }
+}, []);
+const copyProfileLink = async () => {
+  if (!profileUrl) return;
+
+  await navigator.clipboard.writeText(profileUrl);
+
+  setCopied(true);
+
+  setTimeout(() => {
+    setCopied(false);
+  }, 2000);
+};
   return (
     <div className="dashboard">
 
@@ -52,13 +75,68 @@ function CreatorDashboard() {
 
           <div>
 
-            <h1>Welcome Back 👋</h1>
+  <h1>Welcome Back 👋</h1>
 
-            <p>
-              Manage your content, subscribers and earnings.
-            </p>
+  <p>
+    Manage your content, subscribers and earnings.
+  </p>
 
-          </div>
+  <div
+    style={{
+      marginTop: "20px",
+      background: "#1d2233",
+      padding: "15px",
+      borderRadius: "12px"
+    }}
+  >
+
+    <label
+      style={{
+        color: "#fff",
+        fontWeight: 600,
+        marginBottom: "8px",
+        display: "block"
+      }}
+    >
+      Your Public Profile
+    </label>
+
+    <div
+      style={{
+        display: "flex",
+        gap: "10px",
+        flexWrap: "wrap"
+      }}
+    >
+
+      <input
+        value={profileUrl}
+        readOnly
+        style={{
+          flex: 1,
+          minWidth: "250px",
+          padding: "12px",
+          borderRadius: "8px",
+          border: "1px solid #444",
+          background: "#0f172a",
+          color: "#fff"
+        }}
+      />
+
+      <button
+        className="btn btn-primary"
+        onClick={copyProfileLink}
+      >
+        {copied ? "Copied ✓" : "Copy URL"}
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+      
 
           <button
             className="btn btn-danger dashboard-create-btn"

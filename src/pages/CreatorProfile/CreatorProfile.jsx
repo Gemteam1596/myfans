@@ -38,27 +38,49 @@ function CreatorProfile() {
   }
 
   async function saveProfile() {
-    const user = auth.currentUser;
+  const user = auth.currentUser;
 
-    if (!user) return;
+  if (!user) return;
 
-    await setDoc(
-      doc(db, "users", user.uid),
-      {
-        uid: user.uid,
-        email: user.email,
-        fullName: profile.fullName,
-        username: profile.username,
-        bio: profile.bio,
-        subscriptionPrice: profile.subscriptionPrice,
-        profileImage: profile.profileImage,
-        coverImage: profile.coverImage,
-      },
-      { merge: true }
-    );
+  await setDoc(
+    doc(db, "users", user.uid),
+    {
+      uid: user.uid,
+      email: user.email,
+      fullName: profile.fullName,
+      username: profile.username,
+      bio: profile.bio,
+      subscriptionPrice: profile.subscriptionPrice,
+      profileImage: profile.profileImage,
+      coverImage: profile.coverImage,
+    },
+    { merge: true }
+  );
 
-    alert("Profile updated successfully.");
-  }
+  // Update localStorage
+  const currentUser =
+    JSON.parse(localStorage.getItem("user") || "{}");
+
+  localStorage.setItem(
+    "user",
+    JSON.stringify({
+      ...currentUser,
+      uid: user.uid,
+      email: user.email,
+      fullName: profile.fullName,
+      username: profile.username,
+      subscriptionPrice: profile.subscriptionPrice,
+      profileImage: profile.profileImage,
+      coverImage: profile.coverImage,
+      bio: profile.bio,
+    })
+  );
+
+  alert("Profile updated successfully.");
+
+  // Refresh so dashboard uses new username
+  window.location.reload();
+}
 
   if (loading) {
     return <h2 style={{ textAlign: "center" }}>Loading...</h2>;
