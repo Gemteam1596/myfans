@@ -18,7 +18,7 @@ function Login() {
 
       // Load profile from MySQL
       const response = await fetch(
-        "https://myfanshub.club/api/get-profile.php",
+        "https://api.myfanshub.club/api/get-profile.php",
         {
           method: "POST",
           headers: {

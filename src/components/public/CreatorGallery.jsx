@@ -22,7 +22,7 @@ function CreatorGallery({ creator }) {
   const loadPosts = async () => {
     try {
       const response = await fetch(
-        "https://myfanshub.club/api/get-posts.php",
+        "https://api.myfanshub.club/api/get-posts.php",
         {
           method: "POST",
           headers: {
@@ -70,7 +70,7 @@ function CreatorGallery({ creator }) {
         {posts.map((post) => {
 
           const mediaUrl = post.media
-            ? `https://myfanshub.club/api/${post.media}`
+            ? `https://api.myfanshub.club/api/${post.media}`
             : "";
 
           const isPremium =

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 function PostCard({ post }) {
-  const mediaUrl = "https://myfanshub.club/api/" + post.media;
+  const mediaUrl = "https://api.myfanshub.club/api/" + post.media;
 
   const [editing, setEditing] = useState(false);
   const [content, setContent] = useState(post.content);
@@ -13,7 +13,7 @@ function PostCard({ post }) {
 
     try {
       const response = await fetch(
-        "https://myfanshub.club/api/update-post.php",
+        "https://api.myfanshub.club/api/update-post.php",
         {
           method: "POST",
           headers: {
@@ -50,7 +50,7 @@ function PostCard({ post }) {
 
     try {
       const response = await fetch(
-        "https://myfanshub.club/api/delete-post.php",
+        "https://api.myfanshub.club/api/delete-post.php",
         {
           method: "POST",
           headers: {

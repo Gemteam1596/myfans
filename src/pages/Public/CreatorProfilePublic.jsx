@@ -27,7 +27,7 @@ function CreatorProfilePublic() {
       console.log("Username:", username);
 
       const response = await fetch(
-        "https://myfanshub.club/api/get-profile.php",
+        "https://api.myfanshub.club/api/get-profile.php",
         {
           method: "POST",
           headers: {

@@ -19,7 +19,7 @@ function PostGrid() {
 
     try {
       const response = await fetch(
-        "https://myfanshub.club/api/get-posts.php",
+        "https://api.myfanshub.club/api/get-posts.php",
         {
           method: "POST",
           headers: {

@@ -32,7 +32,7 @@ function Signup() {
       const user = userCredential.user;
 
       // Save user profile in MySQL
-      const response = await fetch("https://myfanshub.club/api/signup.php", {
+      const response = await fetch("https://api.myfanshub.clubi./api/signup.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

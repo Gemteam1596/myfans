@@ -35,7 +35,7 @@ function CreatePost() {
 
     try {
       const response = await fetch(
-        "https://myfanshub.club/api/create-post.php",
+        "https://api.myfanshub.club/api/create-post.php",
         {
           method: "POST",
           body: formData,

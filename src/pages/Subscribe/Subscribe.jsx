@@ -18,7 +18,7 @@ function Subscribe() {
     const submitPayment = async () => {
 
         const response = await fetch(
-            "https://myfanshub.club/api/submit-payment.php",
+            "https://api.myfanshub.club/api/submit-payment.php",
             {
                 method: "POST",
                 headers: {

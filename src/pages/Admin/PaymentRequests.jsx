@@ -11,7 +11,7 @@ function PaymentRequests() {
   const loadPayments = async () => {
 
     const response = await fetch(
-      "https://myfanshub.club/api/get-payment-requests.php"
+      "https://api.myfanshub.club/api/get-payment-requests.php"
     );
 
     const result = await response.json();
@@ -25,7 +25,7 @@ function PaymentRequests() {
   const approvePayment = async (id) => {
 
     await fetch(
-      "https://myfanshub.club/api/approve-payment.php",
+      "https://api.myfanshub.club/api/approve-payment.php",
       {
         method: "POST",
         headers: {
@@ -44,7 +44,7 @@ function PaymentRequests() {
   const rejectPayment = async (id) => {
 
     await fetch(
-      "https://myfanshub.club/api/reject-payment.php",
+      "https://api.myfanshub.club/api/reject-payment.php",
       {
         method: "POST",
         headers: {
