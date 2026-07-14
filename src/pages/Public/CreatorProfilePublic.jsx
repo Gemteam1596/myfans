@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Navigate } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+
+import { auth } from "../../firebase";
 
 import CreatorHero from "../../components/public/CreatorHero";
 import CreatorAbout from "../../components/public/CreatorAbout";
@@ -15,6 +18,18 @@ function CreatorProfilePublic() {
   const [creator, setCreator] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const [checkingAuth, setCheckingAuth] = useState(true);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setCheckingAuth(false);
+    });
+
+    return unsubscribe;
+  }, []);
+
   useEffect(() => {
     if (username) {
       loadCreator();
@@ -23,9 +38,6 @@ function CreatorProfilePublic() {
 
   const loadCreator = async () => {
     try {
-      console.log("========== PUBLIC PROFILE ==========");
-      console.log("Username:", username);
-
       const response = await fetch(
         "https://api.myfanshub.club/api/get-profile.php",
         {
@@ -39,41 +51,37 @@ function CreatorProfilePublic() {
         }
       );
 
-      console.log("HTTP Status:", response.status);
-
-      if (!response.ok) {
-        throw new Error(`HTTP Error ${response.status}`);
-      }
-
       const result = await response.json();
 
-      console.log("API Response:", result);
-
       if (result.success && result.user) {
-        console.log("Creator Loaded Successfully");
-        console.log(result.user);
-
         setCreator(result.user);
       } else {
-        console.error("API ERROR:", result);
-
-        alert(
-          "API ERROR\n\n" +
-          JSON.stringify(result, null, 2)
-        );
-
         setCreator(null);
       }
     } catch (error) {
-      console.error("Fetch Error:", error);
-
-      alert(error.message);
-
+      console.error(error);
       setCreator(null);
     } finally {
       setLoading(false);
     }
   };
+
+  if (checkingAuth) {
+    return (
+      <h2 style={{ textAlign: "center", marginTop: "50px" }}>
+        Loading...
+      </h2>
+    );
+  }
+
+  if (!user) {
+    localStorage.setItem(
+      "redirectAfterLogin",
+      window.location.pathname
+    );
+
+    return <Navigate to="/login" replace />;
+  }
 
   if (loading) {
     return (
@@ -93,11 +101,6 @@ function CreatorProfilePublic() {
         }}
       >
         <h2>Creator not found</h2>
-
-        <p>
-          Open Developer Console (F12 → Console)
-          and send me the API response.
-        </p>
       </div>
     );
   }

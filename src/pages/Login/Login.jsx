@@ -40,7 +40,17 @@ function Login() {
       // Save user locally
       localStorage.setItem("user", JSON.stringify(result.user));
 
-      // Redirect and remove Login page from history
+      // Return user to the page they originally wanted
+      const redirectAfterLogin =
+        localStorage.getItem("redirectAfterLogin");
+
+      if (redirectAfterLogin) {
+        localStorage.removeItem("redirectAfterLogin");
+        navigate(redirectAfterLogin, { replace: true });
+        return;
+      }
+
+      // Otherwise send to dashboard
       if (result.user.accountType === "Creator") {
         navigate("/creator-dashboard", { replace: true });
       } else {
@@ -49,6 +59,7 @@ function Login() {
 
     } catch (error) {
       console.error(error);
+      alert(error.message);
     }
   };
 
