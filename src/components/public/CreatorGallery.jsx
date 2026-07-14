@@ -59,7 +59,6 @@ function CreatorGallery({ creator }) {
   if (!user) {
     return (
       <div className="public-card">
-
         <div className="gallery-header">
           <h2>Creator Content</h2>
           <p>Login as a Fan to view this creator's content.</p>
@@ -114,7 +113,6 @@ function CreatorGallery({ creator }) {
             </Link>
           </div>
         </div>
-
       </div>
     );
   }
@@ -135,13 +133,11 @@ function CreatorGallery({ creator }) {
       </div>
 
       <div className="gallery-grid">
-
         {posts.length === 0 && (
           <h4>No posts available.</h4>
         )}
 
         {posts.map((post) => {
-
           const mediaUrl = post.media
             ? `https://api.myfanshub.club/api/${post.media}`
             : "";
@@ -160,10 +156,8 @@ function CreatorGallery({ creator }) {
                 position: "relative",
               }}
             >
-
               {post.mediaType === "image" && mediaUrl && (
                 <div style={{ position: "relative" }}>
-
                   <img
                     src={mediaUrl}
                     alt="Creator Post"
@@ -191,6 +185,8 @@ function CreatorGallery({ creator }) {
                         alignItems: "center",
                         background:
                           "linear-gradient(to bottom,rgba(8,25,80,.20),rgba(8,25,80,.55),rgba(0,0,0,.85))",
+                        padding: "20px",
+                        textAlign: "center",
                       }}
                     >
                       <FaLock size={48} color="#fff" />
@@ -199,28 +195,77 @@ function CreatorGallery({ creator }) {
                         style={{
                           color: "#fff",
                           marginTop: 20,
+                          marginBottom: 10,
                         }}
                       >
-                        Premium Content
+                        PREMIUM CONTENT
                       </h2>
 
                       <p
                         style={{
                           color: "#dbeafe",
-                          marginTop: 10,
+                          maxWidth: "280px",
+                          lineHeight: "1.6",
                         }}
                       >
-                        Subscribe to unlock this post
+                        This exclusive content has been locked by the creator.
+                      </p>
+
+                      <h3
+                        style={{
+                          color: "#fff",
+                          marginTop: 15,
+                          marginBottom: 15,
+                        }}
+                      >
+                        5 USDT
+                      </h3>
+
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        style={{ minWidth: "180px" }}
+                      >
+                        UNLOCK POST
+                      </button>
+
+                      <p
+                        style={{
+                          color: "#fff",
+                          margin: "18px 0",
+                          fontWeight: "600",
+                        }}
+                      >
+                        OR
+                      </p>
+
+                      <button
+                        type="button"
+                        className="btn btn-outline-light"
+                        style={{ minWidth: "180px" }}
+                      >
+                        SUBSCRIBE NOW
+                      </button>
+
+                      <p
+                        style={{
+                          color: "#dbeafe",
+                          maxWidth: "280px",
+                          lineHeight: "1.6",
+                          marginTop: 18,
+                          fontSize: "14px",
+                        }}
+                      >
+                        Subscribe once and unlock all premium content from
+                        this creator.
                       </p>
                     </div>
                   )}
-
                 </div>
               )}
 
               {post.mediaType === "video" && mediaUrl && (
                 <div style={{ position: "relative" }}>
-
                   <video
                     src={mediaUrl}
                     muted
@@ -243,16 +288,87 @@ function CreatorGallery({ creator }) {
                         position: "absolute",
                         inset: 0,
                         display: "flex",
+                        flexDirection: "column",
                         justifyContent: "center",
                         alignItems: "center",
                         background:
                           "linear-gradient(to bottom,rgba(8,25,80,.20),rgba(8,25,80,.55),rgba(0,0,0,.85))",
+                        padding: "20px",
+                        textAlign: "center",
                       }}
                     >
                       <FaLock size={48} color="#fff" />
+
+                      <h2
+                        style={{
+                          color: "#fff",
+                          marginTop: 20,
+                          marginBottom: 10,
+                        }}
+                      >
+                        PREMIUM CONTENT
+                      </h2>
+
+                      <p
+                        style={{
+                          color: "#dbeafe",
+                          maxWidth: "280px",
+                          lineHeight: "1.6",
+                        }}
+                      >
+                        This exclusive content has been locked by the creator.
+                      </p>
+
+                      <h3
+                        style={{
+                          color: "#fff",
+                          marginTop: 15,
+                          marginBottom: 15,
+                        }}
+                      >
+                        5 USDT
+                      </h3>
+
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        style={{ minWidth: "180px" }}
+                      >
+                        UNLOCK POST
+                      </button>
+
+                      <p
+                        style={{
+                          color: "#fff",
+                          margin: "18px 0",
+                          fontWeight: "600",
+                        }}
+                      >
+                        OR
+                      </p>
+
+                      <button
+                        type="button"
+                        className="btn btn-outline-light"
+                        style={{ minWidth: "180px" }}
+                      >
+                        SUBSCRIBE NOW
+                      </button>
+
+                      <p
+                        style={{
+                          color: "#dbeafe",
+                          maxWidth: "280px",
+                          lineHeight: "1.6",
+                          marginTop: 18,
+                          fontSize: "14px",
+                        }}
+                      >
+                        Subscribe once and unlock all premium content from
+                        this creator.
+                      </p>
                     </div>
                   )}
-
                 </div>
               )}
 
@@ -267,11 +383,9 @@ function CreatorGallery({ creator }) {
                   <span>{post.comments || 0}</span>
                 </div>
               </div>
-
             </div>
           );
         })}
-
       </div>
     </div>
   );
