@@ -191,21 +191,13 @@ function CreatorGallery({ creator }) {
                     >
                       <FaLock size={48} color="#fff" />
 
-                      <h2
-                        style={{
-                          color: "#fff",
-                          marginTop: 20,
-                          marginBottom: 10,
-                        }}
-                      >
-                        PREMIUM CONTENT
-                      </h2>
-
                       <p
                         style={{
                           color: "#dbeafe",
                           maxWidth: "280px",
                           lineHeight: "1.6",
+                          textAlign: "center",
+                          marginTop: "15px",
                         }}
                       >
                         This exclusive content has been locked by the creator.
@@ -214,8 +206,9 @@ function CreatorGallery({ creator }) {
                       <h3
                         style={{
                           color: "#fff",
-                          marginTop: 15,
-                          marginBottom: 15,
+                          marginTop: 20,
+                          marginBottom: 20,
+                          fontSize: "36px",
                         }}
                       >
                         5 USDT
@@ -234,30 +227,23 @@ function CreatorGallery({ creator }) {
                           color: "#fff",
                           margin: "18px 0",
                           fontWeight: "600",
+                          fontSize: "20px",
                         }}
                       >
                         OR
                       </p>
-
-                      <button
-                        type="button"
-                        className="btn btn-outline-light"
-                        style={{ minWidth: "180px" }}
-                      >
-                        SUBSCRIBE NOW
-                      </button>
 
                       <p
                         style={{
                           color: "#dbeafe",
                           maxWidth: "280px",
                           lineHeight: "1.6",
-                          marginTop: 18,
+                          textAlign: "center",
                           fontSize: "14px",
                         }}
                       >
-                        Subscribe once and unlock all premium content from
-                        this creator.
+                        Subscribe once and unlock all premium content
+                        from this creator.
                       </p>
                     </div>
                   )}
@@ -299,21 +285,13 @@ function CreatorGallery({ creator }) {
                     >
                       <FaLock size={48} color="#fff" />
 
-                      <h2
-                        style={{
-                          color: "#fff",
-                          marginTop: 20,
-                          marginBottom: 10,
-                        }}
-                      >
-                        PREMIUM CONTENT
-                      </h2>
-
                       <p
                         style={{
                           color: "#dbeafe",
                           maxWidth: "280px",
                           lineHeight: "1.6",
+                          textAlign: "center",
+                          marginTop: "15px",
                         }}
                       >
                         This exclusive content has been locked by the creator.
@@ -322,8 +300,9 @@ function CreatorGallery({ creator }) {
                       <h3
                         style={{
                           color: "#fff",
-                          marginTop: 15,
-                          marginBottom: 15,
+                          marginTop: 20,
+                          marginBottom: 20,
+                          fontSize: "36px",
                         }}
                       >
                         5 USDT
@@ -342,30 +321,23 @@ function CreatorGallery({ creator }) {
                           color: "#fff",
                           margin: "18px 0",
                           fontWeight: "600",
+                          fontSize: "20px",
                         }}
                       >
                         OR
                       </p>
-
-                      <button
-                        type="button"
-                        className="btn btn-outline-light"
-                        style={{ minWidth: "180px" }}
-                      >
-                        SUBSCRIBE NOW
-                      </button>
 
                       <p
                         style={{
                           color: "#dbeafe",
                           maxWidth: "280px",
                           lineHeight: "1.6",
-                          marginTop: 18,
+                          textAlign: "center",
                           fontSize: "14px",
                         }}
                       >
-                        Subscribe once and unlock all premium content from
-                        this creator.
+                        Subscribe once and unlock all premium content
+                        from this creator.
                       </p>
                     </div>
                   )}
