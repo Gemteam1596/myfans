@@ -1,6 +1,15 @@
-import { FaCheckCircle, FaHeart, FaUserFriends } from "react-icons/fa";
+import { FaCheckCircle, FaUserFriends } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function CreatorHero({ creator }) {
+  const navigate = useNavigate();
+
+  const handleSubscribe = () => {
+    if (!creator?.username) return;
+
+    navigate(`/subscribe/${creator.username}`);
+  };
+
   return (
     <div className="creator-hero">
 
@@ -41,6 +50,19 @@ function CreatorHero({ creator }) {
             @{creator.username}
           </p>
 
+          {creator.bio && (
+            <p
+              style={{
+                marginTop: "12px",
+                color: "#cbd5e1",
+                lineHeight: "1.6",
+                maxWidth: "650px",
+              }}
+            >
+              {creator.bio}
+            </p>
+          )}
+
           <div className="creator-numbers">
 
             <div>
@@ -65,17 +87,16 @@ function CreatorHero({ creator }) {
         {/* Buttons */}
         <div className="creator-actions">
 
-          <button className="subscribe-btn">
+          <button
+            className="subscribe-btn"
+            onClick={handleSubscribe}
+          >
             Subscribe ${creator.subscriptionPrice || "0"}
           </button>
 
           <button className="follow-btn">
             <FaUserFriends />
             Follow
-          </button>
-
-          <button className="like-btn">
-            <FaHeart />
           </button>
 
         </div>

@@ -8,15 +8,18 @@ function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
 
     try {
       // Firebase Login
       await signInWithEmailAndPassword(auth, email, password);
 
-      // Load profile from MySQL
+      // Load user profile
       const response = await fetch(
         "https://api.myfanshub.club/api/get-profile.php",
         {
@@ -33,33 +36,34 @@ function Login() {
       const result = await response.json();
 
       if (!result.success) {
-        console.error(result.message);
+        alert(result.message || "Unable to load profile.");
+        setLoading(false);
         return;
       }
 
-      // Save user locally
+      // Save logged in user
       localStorage.setItem("user", JSON.stringify(result.user));
 
-      // Return user to the page they originally wanted
-      const redirectAfterLogin =
-        localStorage.getItem("redirectAfterLogin");
+      // Redirect back to the page user originally wanted
+      const redirect = localStorage.getItem("redirectAfterLogin");
 
-      if (redirectAfterLogin) {
+      if (redirect && redirect !== "/login") {
         localStorage.removeItem("redirectAfterLogin");
-        navigate(redirectAfterLogin, { replace: true });
+        navigate(redirect, { replace: true });
         return;
       }
 
-      // Otherwise send to dashboard
+      // Otherwise go to dashboard
       if (result.user.accountType === "Creator") {
         navigate("/creator-dashboard", { replace: true });
       } else {
         navigate("/fan-dashboard", { replace: true });
       }
-
     } catch (error) {
       console.error(error);
       alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -115,12 +119,13 @@ function Login() {
                 <button
                   type="submit"
                   className="btn btn-danger w-100"
+                  disabled={loading}
                 >
-                  Login
+                  {loading ? "Logging in..." : "Login"}
                 </button>
 
                 <div className="text-center mt-4">
-                  Don't have an account?{" "}
+                  Don't have an account?
                   <Link
                     to="/signup"
                     className="ms-2 signup-link"

@@ -2,9 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import CreatorHero from "../../components/public/CreatorHero";
-import CreatorAbout from "../../components/public/CreatorAbout";
-import CreatorStats from "../../components/public/CreatorStats";
-import SubscribeCard from "../../components/public/SubscribeCard";
 import CreatorGallery from "../../components/public/CreatorGallery";
 
 import "../../assets/css/PublicProfile.css";
@@ -15,11 +12,25 @@ function CreatorProfilePublic() {
   const [creator, setCreator] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Check if a fan is logged in
+  const user = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     if (username) {
       loadCreator();
     }
   }, [username]);
+
+  // Save the current creator page so Login.jsx
+  // can return the fan here after login.
+  useEffect(() => {
+    if (!user) {
+      localStorage.setItem(
+        "redirectAfterLogin",
+        window.location.pathname
+      );
+    }
+  }, [user]);
 
   const loadCreator = async () => {
     try {
@@ -81,23 +92,17 @@ function CreatorProfilePublic() {
 
   return (
     <div className="public-profile">
-
       <CreatorHero creator={creator} />
 
-      <div className="public-container">
-
-        <div className="public-left">
-          <CreatorAbout creator={creator} />
-          <CreatorStats creator={creator} />
-          <CreatorGallery creator={creator} />
-        </div>
-
-        <div className="public-right">
-          <SubscribeCard creator={creator} />
-        </div>
-
+      <div
+        style={{
+          maxWidth: "900px",
+          margin: "30px auto",
+          padding: "0 20px",
+        }}
+      >
+        <CreatorGallery creator={creator} />
       </div>
-
     </div>
   );
 }
