@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Navigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
-
-import { auth } from "../../firebase";
+import { useParams } from "react-router-dom";
 
 import CreatorHero from "../../components/public/CreatorHero";
 import CreatorAbout from "../../components/public/CreatorAbout";
@@ -17,18 +14,6 @@ function CreatorProfilePublic() {
 
   const [creator, setCreator] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  const [checkingAuth, setCheckingAuth] = useState(true);
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setCheckingAuth(false);
-    });
-
-    return unsubscribe;
-  }, []);
 
   useEffect(() => {
     if (username) {
@@ -66,26 +51,15 @@ function CreatorProfilePublic() {
     }
   };
 
-  if (checkingAuth) {
-    return (
-      <h2 style={{ textAlign: "center", marginTop: "50px" }}>
-        Loading...
-      </h2>
-    );
-  }
-
-  if (!user) {
-    localStorage.setItem(
-      "redirectAfterLogin",
-      window.location.pathname
-    );
-
-    return <Navigate to="/login" replace />;
-  }
-
   if (loading) {
     return (
-      <h2 style={{ textAlign: "center", marginTop: "50px" }}>
+      <h2
+        style={{
+          textAlign: "center",
+          marginTop: "50px",
+          color: "#fff",
+        }}
+      >
         Loading Creator...
       </h2>
     );
@@ -107,9 +81,11 @@ function CreatorProfilePublic() {
 
   return (
     <div className="public-profile">
+
       <CreatorHero creator={creator} />
 
       <div className="public-container">
+
         <div className="public-left">
           <CreatorAbout creator={creator} />
           <CreatorStats creator={creator} />
@@ -119,7 +95,9 @@ function CreatorProfilePublic() {
         <div className="public-right">
           <SubscribeCard creator={creator} />
         </div>
+
       </div>
+
     </div>
   );
 }

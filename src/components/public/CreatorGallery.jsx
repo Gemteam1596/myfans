@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   FaHeart,
   FaComment,
@@ -10,8 +11,17 @@ function CreatorGallery({ creator }) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Check if a fan is logged in
+  const user = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     if (!creator?.uid) {
+      setLoading(false);
+      return;
+    }
+
+    // Don't load posts until the fan logs in
+    if (!user) {
       setLoading(false);
       return;
     }
@@ -46,6 +56,69 @@ function CreatorGallery({ creator }) {
     }
   };
 
+  if (!user) {
+    return (
+      <div className="public-card">
+
+        <div className="gallery-header">
+          <h2>Creator Content</h2>
+          <p>Login as a Fan to view this creator's content.</p>
+        </div>
+
+        <div
+          style={{
+            textAlign: "center",
+            padding: "70px 20px",
+          }}
+        >
+          <div style={{ fontSize: "70px" }}>🔒</div>
+
+          <h2 style={{ marginTop: "20px" }}>
+            Login Required
+          </h2>
+
+          <p
+            style={{
+              color: "#94a3b8",
+              marginTop: "15px",
+              maxWidth: "500px",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          >
+            Please login as a Fan to view photos,
+            videos and premium content from this creator.
+          </p>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "15px",
+              marginTop: "35px",
+              flexWrap: "wrap",
+            }}
+          >
+            <Link
+              to="/login"
+              className="btn btn-primary"
+            >
+              Fan Login
+            </Link>
+
+            <Link
+              to="/signup"
+              className="btn btn-outline-light"
+            >
+              Create Fan Account
+            </Link>
+          </div>
+        </div>
+
+      </div>
+    );
+  }
+
   if (loading) {
     return (
       <div className="public-card">
@@ -70,8 +143,9 @@ function CreatorGallery({ creator }) {
         {posts.map((post) => {
 
           const mediaUrl = post.media
-              ? `https://api.myfanshub.club/api/${post.media}`
-              : "";
+            ? `https://api.myfanshub.club/api/${post.media}`
+            : "";
+
           const isPremium =
             post.visibility === "premium" ||
             post.visibility === "subscribers";
@@ -87,15 +161,8 @@ function CreatorGallery({ creator }) {
               }}
             >
 
-              {/* IMAGE */}
-
               {post.mediaType === "image" && mediaUrl && (
-
-                <div
-                  style={{
-                    position: "relative",
-                  }}
-                >
+                <div style={{ position: "relative" }}>
 
                   <img
                     src={mediaUrl}
@@ -114,7 +181,6 @@ function CreatorGallery({ creator }) {
                   />
 
                   {isPremium && (
-
                     <div
                       style={{
                         position: "absolute",
@@ -125,21 +191,14 @@ function CreatorGallery({ creator }) {
                         alignItems: "center",
                         background:
                           "linear-gradient(to bottom,rgba(8,25,80,.20),rgba(8,25,80,.55),rgba(0,0,0,.85))",
-                        backdropFilter: "blur(3px)",
                       }}
                     >
-
-                      <FaLock
-                        size={48}
-                        color="#fff"
-                      />
+                      <FaLock size={48} color="#fff" />
 
                       <h2
                         style={{
                           color: "#fff",
                           marginTop: 20,
-                          fontSize: 30,
-                          fontWeight: 700,
                         }}
                       >
                         Premium Content
@@ -148,48 +207,19 @@ function CreatorGallery({ creator }) {
                       <p
                         style={{
                           color: "#dbeafe",
-                          marginTop: 8,
+                          marginTop: 10,
                         }}
                       >
                         Subscribe to unlock this post
                       </p>
-
-                      <button
-                        style={{
-                          marginTop: 25,
-                          padding: "14px 40px",
-                          border: "none",
-                          borderRadius: 14,
-                          cursor: "pointer",
-                          color: "#fff",
-                          fontWeight: 700,
-                          fontSize: 17,
-                          background:
-                            "linear-gradient(90deg,#2563eb,#4f46e5,#2563eb)",
-                          boxShadow:
-                            "0 12px 30px rgba(37,99,235,.45)",
-                        }}
-                      >
-                        Unlock Now
-                      </button>
-
                     </div>
-
                   )}
 
                 </div>
-
               )}
 
-              {/* VIDEO */}
-
               {post.mediaType === "video" && mediaUrl && (
-
-                <div
-                  style={{
-                    position: "relative",
-                  }}
-                >
+                <div style={{ position: "relative" }}>
 
                   <video
                     src={mediaUrl}
@@ -217,22 +247,16 @@ function CreatorGallery({ creator }) {
                         alignItems: "center",
                         background:
                           "linear-gradient(to bottom,rgba(8,25,80,.20),rgba(8,25,80,.55),rgba(0,0,0,.85))",
-                        backdropFilter: "blur(3px)",
                       }}
                     >
-                      <FaLock
-                        size={48}
-                        color="#fff"
-                      />
+                      <FaLock size={48} color="#fff" />
                     </div>
                   )}
 
                 </div>
-
               )}
 
               <div className="gallery-footer">
-
                 <div>
                   <FaHeart />
                   <span>{post.likes || 0}</span>
@@ -242,7 +266,6 @@ function CreatorGallery({ creator }) {
                   <FaComment />
                   <span>{post.comments || 0}</span>
                 </div>
-
               </div>
 
             </div>
