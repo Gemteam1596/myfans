@@ -70,7 +70,7 @@ function CreatorGallery({ creator }) {
         {posts.map((post) => {
 
           const mediaUrl = post.media
-              ? `https://api.myfanshub.club/${post.media}`
+              ? `https://api.myfanshub.club/api/${post.media}`
               : "";
           const isPremium =
             post.visibility === "premium" ||

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 function PostCard({ post }) {
-  const mediaUrl = "https://api.myfanshub.club/" + post.media;
+  const mediaUrl = "https://api.myfanshub.club/api/" + post.media;
 
   const [editing, setEditing] = useState(false);
   const [content, setContent] = useState(post.content);
